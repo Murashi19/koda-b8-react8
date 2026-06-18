@@ -8,6 +8,7 @@ function HomePage() {
 
 	function handleLogout() {
 		setAuth(null);
+		navigate("/auth/login");
 	}
 
 	return (
