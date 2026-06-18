@@ -4,6 +4,7 @@ import LoginPage from "./pages/LoginPage";
 import HomePage from "./pages/HomePage";
 
 import AuthContext from "./context/AuthContext";
+import RegisterPage from "./pages/RegisterPage";
 
 const router = createBrowserRouter([
 	{
@@ -13,6 +14,10 @@ const router = createBrowserRouter([
 	{
 		path: "/auth/login",
 		element: <LoginPage />,
+	},
+	{
+		path: "/auth/register",
+		element: <RegisterPage />,
 	},
 ]);
 

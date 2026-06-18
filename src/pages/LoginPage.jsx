@@ -2,34 +2,36 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import AuthContext from "../context/AuthContext";
 
-const users = [
-	{
-		name: "zidan",
-		email: "zidan@mail.com",
-		password: "zidan",
-	},
-	{
-		name: "ahmad",
-		email: "ahmad@mail.com",
-		password: "ahmad",
-	},
-];
+import useLocalStorage from "../hooks/useLocalStorage";
 
 function LoginPage() {
 	const navigate = useNavigate();
+	const [users] = useLocalStorage();
 	const { setAuth } = React.useContext(AuthContext);
 	function loginProcess(e) {
 		e.preventDefault();
-		const data = new FormData(e.target);
-		const email = data.get("email");
-		const password = data.get("password");
-		const user = users.find((user) => user.email === email && user.password === password);
-		if (user) {
-			setAuth(user);
-			navigate("/");
-		} else {
-			alert("Email atau Password Salah");
+
+		const formData = new FormData(e.target);
+
+		const { email, password } = Object.fromEntries(formData.entries());
+
+		if (!email || !password) {
+			alert("Email dan Password wajib diisi");
+			return;
 		}
+
+		const user = users.find((user) => user.email === email && user.password === password);
+
+		if (!user) {
+			alert("Email atau Password salah");
+			return;
+		}
+
+		setAuth(user);
+
+		alert("Login berhasil");
+
+		navigate("/");
 	}
 	return (
 		<>
